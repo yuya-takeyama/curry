@@ -26,12 +26,9 @@ f(x, y, z)
 <?php
 use function yuyat\curry;
 
-$sum = function ($x, $y, $z)
-{
+$sum = curry(function ($x, $y, $z) {
     reteurn $x + $y + $z;
-}
-
-$curriedFunction = curry($sum);
+});
 
 echo $sum(1)->apply(2)->apply(3), PHP_EOL;
 // => 6
@@ -45,12 +42,11 @@ echo $sum[1][2][3], PHP_EOL; // Ruby-like short syntax
 For functions take variadic parameters, you must specify actual parameter length as 2nd argument.
 
 
-```
+```php
 <?php
 use function yuyat\curry;
 
-$sum = function (/* numbers to calculate sum */)
-{
+$sum = curry(function (/* numbers to calculate sum */) {
     $result = 0;
 
     foreach (func_get_args() as $arg) {
@@ -58,9 +54,7 @@ $sum = function (/* numbers to calculate sum */)
 		}
 
     return $result;
-}
-
-$curriedFunction = curry($sum, 3);
+}, 3);
 
 echo $sum(1)->apply(2)->apply(3), PHP_EOL;
 // => 6

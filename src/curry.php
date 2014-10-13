@@ -66,24 +66,7 @@ class CurriedFunction implements \ArrayAccess
 function curry($fn, $count = null)
 {
     if (!$count) {
-        if (\is_callable($fn) && \is_array($fn)) {
-            if (\is_object($fn[0])) {
-                $ref = new \ReflectionMethod(\get_class($fn[0]), $fn[1]);
-            } elseif (\is_string($fn[0])) {
-                $ref = new \ReflectionMethod($fn[0], $fn[1]);
-            }
-        } elseif ($fn instanceof \Closure) {
-            $ref = new \ReflectionFunction($fn);
-        } elseif (\is_string($fn)) {
-            if (strpos($fn, '::') !== false) {
-                $ref = new \ReflectionMethod($fn);
-            } else {
-                $ref = new \ReflectionFunction($fn);
-            }
-        } else {
-            throw new \InvalidArgumentException('argument #1 is not callable');
-        }
-
+        $ref   = callableToReflector($fn);
         $count = $ref->getNumberOfParameters();
     }
 

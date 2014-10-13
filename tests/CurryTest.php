@@ -37,39 +37,4 @@ class CurryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(6, $func->apply(1)->apply(2)->apply(3));
 
     }
-
-    /**
-     * @dataProvider provideCallable
-     */
-    public function test_curry_any_callable($fn)
-    {
-        $fn = curry($fn);
-
-        $this->assertSame(9, $fn[1][2][3]);
-    }
-
-    public function provideCallable()
-    {
-        return array(
-            array('yuyat\func'),
-            array(array($this, 'method')),
-            array(array(\get_class($this), 'staticMethod')),
-            array('yuyat\CurryTest::staticMethod'),
-        );
-    }
-
-    public function method($x, $y, $z)
-    {
-        return func($x, $y, $z);
-    }
-
-    public static function staticMethod($x, $y, $z)
-    {
-        return func($x, $y, $z);
-    }
-}
-
-function func($x, $y, $z)
-{
-    return ($x + $y) * $z;
 }

@@ -51,7 +51,7 @@ $sum = curry(function (/* numbers to calculate sum */) {
 
     foreach (func_get_args() as $arg) {
         $result += $arg;
-		}
+    }
 
     return $result;
 }, 3);
